@@ -106,6 +106,20 @@ def user_creation():
     }
     user.replace_one({"userid":data["userid"]},user_data,upsert=True)
     return jsonify({"message":"user updated"}),200
+@app("/success-payment")
+def successpay():
+    return """
+    <html>
+        <body>
+            <h2>
+            Payment processing
+            </h2>
+            <script>
+            window.location.href="bill.html"
+            </script>
+        </body>
+    </html>
+    """
 @app.route("/add_cart",methods=["POST"])
 def add_cart():
     data=request.json
@@ -155,7 +169,7 @@ def create_order():
 
         },
     "order_meta": {
-        "return_url": "com.shoppingcart.app://success?order_id={order_id}"
+        "return_url": "https://auto-cart.onrender.com/success?order_id={order_id}"
     }
     }
     headers={
