@@ -106,7 +106,7 @@ def user_creation():
     }
     user.replace_one({"userid":data["userid"]},user_data,upsert=True)
     return jsonify({"message":"user updated"}),200
-@app("/success-payment")
+@app.route("/success-payment")
 def successpay():
     return """
     <html>
@@ -114,9 +114,7 @@ def successpay():
             <h2>
             Payment processing
             </h2>
-            <script>
-            window.location.href="bill.html"
-            </script>
+            
         </body>
     </html>
     """
