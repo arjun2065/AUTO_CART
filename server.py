@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify,json
 from flask_sock import Sock
 from datetime import datetime
 import os
+import requests
 from dotenv import load_dotenv
 import bcrypt
 from flask_cors import CORS
@@ -96,7 +97,7 @@ def user_creation():
     hashed_pass=bcrypt.hashpw(password.encode('utf-8'),s)
     user_data={
         "userid":data.get("userid"),
-        "name":data.get("name"),
+        "name":data.get("name","newuser"),
         "email":data.get("email"),
         "password":hashed_pass.decode('utf-8')
 
@@ -108,6 +109,7 @@ def user_creation():
 @app.route("/add_cart",methods=["POST"])
 def add_cart():
     data=request.json
+    sessionid=data.get("sessionid")
     userid=data.get("userid")
     barcode=data.get("barcode")
     quantity=data.get("quantity")
@@ -115,6 +117,7 @@ def add_cart():
     if not product:
         return jsonify({"message":"product not found"}),404
     cart_items={
+        "sessionid":sessionid,
         "userid":userid,
         "barcode":barcode,
         "item":product["item"],
@@ -139,6 +142,34 @@ def view_list():
             return jsonify({"message":"wrong password"}),200
     else:
         return jsonify({"message":"user not found"}),404
+@app.route("/order",methods=["POST"])
+def create_order():
+    data=request.json
+    order_dat={
+        "order_amount":data["amount"],
+        "order_currency":"INR",
+        "customer_details":{
+            "customer_id":data["customerid"],
+            "customer_email":data["email"],
+            "customer_phone":"9999999999",
+
+        },
+    "order_meta": {
+        "return_url": "com.shoppingcart.app://success?order_id={order_id}"
+    }
+    }
+    headers={
+        "x-api-version":"2022-09-01",
+        "x-client-id":"TEST10998081a5ac5e104fd79dbada8718089901",
+        "x-client-secret":os.getenv("CLIENT-KEY"),
+        "Content-Type":"application/json"
+    }
+    response=requests.post(
+        "https://sandbox.cashfree.com/pg/orders",
+        json=order_dat,
+        headers=headers
+    )
+    return response.json()
 
     
 @app.route("/view_list/<userid>",methods=["GET"])
