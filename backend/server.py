@@ -1,7 +1,8 @@
 from pymongo import MongoClient
-from flask import Flask, request, jsonify,json
+from flask import Flask, request, jsonify,json,redirect
 from flask_sock import Sock
 from datetime import datetime
+import time
 import os
 import requests
 from dotenv import load_dotenv
@@ -18,6 +19,7 @@ collection=database['products']
 cart=database['cart']
 device=database['device']
 user=database['user']
+orders=database['order']
 s=bcrypt.gensalt()
 carts={}
 clients={}
@@ -106,20 +108,34 @@ def user_creation():
     }
     user.replace_one({"userid":data["userid"]},user_data,upsert=True)
     return jsonify({"message":"user updated"}),200
+@app.route("/webhook")
+def webhook():
+    data=request.get_json()
+    orderid=data.get("order_id")
+    paymentst=data.get("payment_status")
+    if paymentst == "success":
+        
+        orders.update_one({"order_id": orderid},
+            {"$set": {"status": "success"}})
+    else:
+       
+        orders.update_one({"order_id": orderid},
+            {"$set": {"status": "failed"}})
+    return 200
+
 @app.route("/success")
-def successpay():
-    return """
-    <html>
-        <body>
-            <h2>
-            Payment processing
-            </h2>
-            <script>
-                window.location.href="com.shoppingcart.app://success";
-            </script>
-        </body>
-    </html>
-    """
+def success():
+    time.sleep(2)
+    orderid=request.args.get("order_id")
+    order=orders.find_one({"order_id":orderid})
+    if order and order["status"] =="success":
+        return redirect("https://auto-cart-1.onrender.com/bill.html")
+        
+    else:
+        return redirect("https://auto-cart-1.onrender.com/failed.html")
+
+
+
 @app.route("/add_cart",methods=["POST"])
 def add_cart():
     data=request.json
