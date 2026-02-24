@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded",()=>{
        
         const cart=JSON.parse(localStorage.getItem("cartentries"))
         
+        
        
 
         
@@ -77,6 +78,8 @@ socket.onmessage=(event) =>{
       console.log("Data from server:", product);
       
       const userid=localStorage.getItem("user")
+      
+      
       cartentries.push(product);
       localStorage.setItem("cartentries",JSON.stringify(cartentries))
       totalprice=cartentries.reduce((sum,product)=>sum+(product.price-product.discount),0)
@@ -101,6 +104,7 @@ socket.onmessage=(event) =>{
 
       
       const cart = document.getElementById("cart");
+      
 
       
 

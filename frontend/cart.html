@@ -25,6 +25,9 @@
         </div>
     </section>
     <nav class="bottomnav">
+         <div class="del">
+            <button id="checkoutbtn" onclick="deletee()"><h3>Delete an item</h3></button>
+        </div>
         <div>
             <h2>Total :</h2>
             <span id="carttotal">₹0</span>
@@ -49,6 +52,9 @@
         window.location.href="index.html";
 
 
+    }
+    function deletee(){
+        window.location.href="deletion.html"
     }
     function check(){
     const totamt=localStorage.getItem("totalamount");

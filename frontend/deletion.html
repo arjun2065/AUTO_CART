@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <title>deletion</title>
+</head>
+<body>
+    <section class="newdiv">
+            <div><h3>Please scan the item you want to remove</h3></div><br>
+            <div>
+            <h3>this page will automatically redirect you after successfull scanning</h3>
+            </div>
+             <h3>if not redirected automaticallyclick here</h3>
+            <div>
+               
+ 
+                    
+                <button id="clicktoload" type="button" onclick="redirection()"><h2>click here</h2></button>
+
+
+            </div>
+        </section>
+    
+</body>
+<script>
+    function redirection(){
+        window.location.href="cart.html"
+    }
+    const cartid = localStorage.getItem("cartID");
+    const socket=new  WebSocket("wss://auto-cart.onrender.com/ws")
+    socket.onopen = () => {
+    console.log("connected");
+
+    socket.send(JSON.stringify({
+        "connection":"sub",
+        "cartID":cartid
+    }))
+    }
+    document.addEventListener("DOMContentLoaded",()=>{
+    socket.onmessage=(event) =>{
+    const data=JSON.parse(event.data)
+    console.log(event.data)
+    if (!data.barcode) {
+    
+        return;
+    
+    }
+    let cartentries = JSON.parse(localStorage.getItem("cartentries")) || [];
+
+        
+    const index = cartentries.findIndex(x => x.barcode === data.barcode);
+
+    if (index !== -1) {
+        
+        cartentries.splice(index, 1);
+
+        localStorage.setItem("cartentries", JSON.stringify(cartentries));
+
+        console.log("Item removed:", data.barcode);
+        window.location.href="cart.html"
+    } 
+    else {
+        console.log("Item not found in cart");
+    }
+
+
+
+    
+    };
+    })
+</script>
+</html>
