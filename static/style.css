@@ -1,0 +1,449 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+
+
+}
+body{
+    padding: 0 2%;
+    font-family: "Inter", sans-serif;
+    /*background-image: url(pexels-alleksana-4451867.jpg);*/
+    background-color: #dee9de;
+    background-size: cover;
+    padding: 0;
+    padding-bottom: 60px;
+
+
+}
+body.cart{
+    background: rgb(255, 255, 255);
+}
+.header{
+    padding: 0 3%;
+
+}
+.headermenu{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 76px;
+    padding: 0 17px;
+    gap: 8px;
+}
+.sideicon{
+    background-color:#5ada86;
+    padding: 18px;
+    border-radius: 5px;
+}
+.sideicon1 button{
+    cursor: pointer;
+    padding: 8px 8px;
+    border-radius: 50px;
+}
+.searchbox{
+    background-color: rgb(147, 244, 77);
+    flex: 0.8;
+    border-radius: 10px;
+    align-items: center;
+    padding: 10px;
+    
+}
+.searchbox i{
+    color: rgb(33, 31, 31);
+    
+}
+.searchbox input{
+    background: transparent;
+    font-size: 15px;
+    padding: 10px;
+    width: 80%;
+
+}
+.menuicons{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.menuicons i{
+    background-color: #5ada86;
+    padding: 20px;
+    border-radius: 5px;
+
+
+}
+.carticon{
+    position: relative;
+}
+.carticon span{
+    background-color: rgb(252, 253, 253);
+    border-radius: 100%;
+    border-color: black;
+    height: 15px;
+    width: 15px;
+    color: rgb(0, 0, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    position: absolute;
+    right: -5px;
+    top: -5px;
+
+}
+.overlay{
+    align-items: center;
+    padding: 50px;
+}
+.mainsection{
+    background-image: url(pexels-kenneth-517653223-17556935.jpg);
+    background-size: cover;
+    height: 25vh;
+    border-radius: 20px;
+    margin-top: 10px;
+    
+}
+.overlay{
+    background: rgba(0, 0, 0, 0.6);
+    height: 100%;
+    color: aliceblue;
+    border-radius: 20px;
+    align-items: center;
+    top: -10px;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.title1{
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+.features{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: -60px;
+    padding: 25px;
+    gap: 20px;
+    
+}
+.sub1{
+    width: 200px;
+    
+    padding: 24px;
+    background-color: #5ada86;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 40vh;
+    gap: 5px;
+
+    border-radius: 10px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+
+}
+/*Copyright - 2026 alexmaracinaru (Alex Maracinaru)*/
+button {
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s;
+  padding: 10px 20px;
+  border-radius: 100px;
+  background: #cfef00;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+
+button:hover {
+  background: #c4e201;
+}
+
+button > svg {
+  width: 34px;
+  margin-left: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+button:hover svg {
+  transform: translateX(5px);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+
+.todoimg{
+    width: 100%;
+    height: 160px;
+    
+    
+}
+.todoimg img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+
+
+}
+.spendingimg{
+    width: 100%;
+    height: 150px;
+    
+}
+.spendingimg img{
+    width: 90%;
+    height: 90%;
+    object-fit: cover;
+
+
+}
+.connecting{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    align-items: center;
+    background-color: #5ada86;border-radius: 10px;
+    padding: 40px;
+    gap: 16px;
+
+}
+#ipconnect{
+    background-color: rgb(255, 255, 255);
+    flex: 0.4;
+    border-radius: 10px;
+    align-items: center;
+    padding: 10px;
+
+}
+
+.logos{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 85px;
+    width: 100%;
+    padding: 0 5%;
+    gap: 20px;
+    background-color: rgb(229, 250, 215);
+
+}
+#item1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#items{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.bottomnav{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    background-color: rgb(219, 234, 207);
+    padding: 15px;
+    gap: 15px;
+
+
+}
+.checkout button{
+    background-color: #5ada86;
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 10px;
+    background-size: cover;
+}
+.cartlist{
+    background-color: rgb(248, 250, 245);
+    min-height: 100vh;
+    padding: 16px;
+}
+#cart{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.cartitem{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    padding: 16px;
+    background: #95b2c7;
+    background: linear-gradient(135deg, rgba(149, 178, 199, 1) 0%, rgba(151, 240, 188, 1) 50%, rgba(229, 252, 164, 1) 100%);
+    border-radius: 10px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    
+    
+}
+.left,.right{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    
+}
+.left strong{
+    font-size: medium;
+    color: rgb(0, 0, 0);
+}
+.right strong{
+    font-size: medium;
+    color: black;
+
+}
+.sidebar{
+    cursor: pointer;
+    user-select: none;
+}
+#side{
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 260px;
+    height: calc(100vh);
+    background: #171917;
+
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 999;
+}
+#side.active{
+    transform: translateX(0);
+}
+#side a{
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    text-decoration: none;
+    color: #abea53;
+}
+.checkoutnav{
+
+    display: flex;
+    align-items: center;
+    justify-content: safe;
+    height: 76px;
+    padding: 0 17px;
+    gap: 20px;
+}
+
+.checkoutbox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    height: 80vh;
+    padding: 20px;
+    border-radius: 20px;
+    border: #171917;
+    background: #5ada86;
+    
+}
+.newdiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 50px;
+}
+#usercreation{
+    display: flex;
+    
+    flex-direction: column;
+    gap: 20px;
+    height: 100vh;
+    width: 60vh;
+    padding: 20px;
+    border-radius: 20px;
+    border: #171917;
+    background: #5ada86;
+}
+#user2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    height: 18vh;
+
+}
+#emailin{
+    background-color: rgb(255, 255, 255);
+    flex: 0.2;
+    border-radius: 10px;
+    align-items: center;
+    padding: 10px;
+}
+#passwordin{
+    background-color: rgb(255, 255, 255);
+    flex: 0.2;
+    border-radius: 10px;
+    align-items: center;
+    padding: 10px;
+}
+#useride{
+    background-color: rgb(255, 255, 255);
+    flex: 0.2;
+    border-radius: 10px;
+    align-items: center;
+    padding: 10px;
+}
+#signup{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#signin{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#getstarted{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+#getst{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    height: fit-content;
+    width: 60vh;
+    padding: 20px;
+    border-radius: 20px;
+    border: #171917;
+    background: #5ada86;
+}
+#viewbill{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+

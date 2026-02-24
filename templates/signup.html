@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>signup</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <nav class="checkoutnav">
+        <div class="sideicon1">
+                <button onclick="back()"><i class="fa-solid fa-arrow-left"></i></button>
+        </div> 
+
+       
+
+    </nav>
+    <div class="newdiv">
+        <div id="usercreation">
+        <h2>
+            SIGN UP
+        </h2>
+        <h3>Enter user id</h3>
+            <input type="text" placeholder="UserID" id="useride">
+        <h3>enter email id</h3>
+        <input type="text" placeholder="enter email ID" id="emailin">
+        <h3>password</h3>
+        <input type="password" placeholder="password" id="passwordin">
+        <button id="signup" onclick="signup()">SIGN UP</button>
+        <div id="user2">
+            <h3>
+                OR
+            </h3>
+            <button id="signups" onclick="switchup()">SIGN IN</button>
+        </div>
+    </div>
+
+    </div>
+    
+    
+</body>
+<script>
+    function signup(){
+        const useride=document.getElementById("useride");
+        const email=document.getElementById("emailin");
+        const password=document.getElementById("passwordin");
+        const userid=useride.value.trim();
+        const emailid=email.value.trim();
+        const pass=password.value.trim();
+        
+        if(!(emailid||pass)){
+            return;
+
+        }
+        localStorage.setItem("userids",userid);
+        localStorage.setItem("email",emailid);
+        
+        fetch(`https://auto-cart.onrender.com/user_creation`,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(
+                {
+                    userid:userid,
+                    email:emailid,
+                    password:pass
+                }   
+            )
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log("Server Response Data:", data);
+            
+            localStorage.setItem("user",userid);
+            setTimeout(() => {
+                window.location.href="index.html";
+            }, 50);
+        })
+
+        .catch(err => console.error(err));
+
+        
+    }
+    function switchup(){
+        window.location.href="signin.html"
+    }
+        
+
+</script>
+</html>

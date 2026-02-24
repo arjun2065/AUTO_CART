@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>final bill</title>
+    
+</head>
+<body>
+    <nav class="checkoutnav">
+        <div class="sideicon1">
+                <button onclick="back()"><i class="fa-solid fa-arrow-left"></i></button>
+         </div> 
+
+        <div>
+            
+        </div>
+    </nav>
+    <nav class="bottomnav">
+        
+        <div>
+            <h2>Total :</h2>
+            <span id="carttotal">₹0</span>
+        </div>
+        
+    </nav>
+    <div id="cart"></div>
+    
+    
+</body>
+<script>
+    function back(){
+        window.location.href="bill.html";
+
+
+    }
+    
+    document.addEventListener("DOMContentLoaded",()=>{
+        const carte = document.getElementById("cart");
+
+        const cart=JSON.parse(localStorage.getItem("cartentries"))
+        carte.innerHTML="";
+      cart.forEach(product=>{carte.insertAdjacentHTML("beforeend", `
+        <div class="cartitem">
+          <div class="left">
+            <strong>${product.item}</strong><br>
+            Barcode: ${product.barcode}<br>
+            Weight: ${product.weight}
+          </div>
+
+          <div class="right">
+            <div>Price: ₹${product.price}</div>
+            <div>Discount: ₹${product.discount}</div>
+            <div><strong>Total: ₹${product.price - product.discount}</strong></div>
+          </div>
+        </div>
+      `
+      
+    )});
+    cart.forEach(product=>{
+        totalprice=cart.reduce((sum,product)=>sum+(product.price-product.discount),0)
+        document.getElementById("carttotal").textContent=`₹${totalprice}`})
+    })
+</script>
+</html>

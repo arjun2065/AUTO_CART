@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+    if (window.Capacitor && Capacitor.isNativePlatform()) {
+
+        Capacitor.Plugins.App.addListener('appUrlOpen', (data) => {
+            if (data.url.includes("success")) {
+                window.location.href = "bill.html";
+            }
+        });
+
+    }
+
+});
+    document.addEventListener("DOMContentLoaded",()=>{
+    const user=localStorage.getItem("user")
+    console.log(user)
+    if(!user){
+        window.location.href="getstarted.html"
+    }
+    else {
+        console.log("Welcome back");
+    }
+})
+
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shopping cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+    <header class="header">
+        <nav class="headermenu">
+            <div class="sideicon">
+                <span class="sidebar" onclick="toggleside()">&#9776;</span> 
+            </div>   
+            
+             <div class="menuicons">
+                <i class="fa-solid fa-box"></i>
+                <div class="carticon">
+                    <a href="cart.html">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                        <span>0</span>
+                    </a>
+                </div>
+             </div>
+        </nav>
+        <div id="side">
+            <a href="index.html">home</a>
+            <a href="about.html">about</a>
+            <a href="cart.html">cart</a>
+            <a href="order.html">order</a>
+        </div>
+        <script>
+            function toggleside()
+        {
+        document.getElementById("side").classList.toggle("active");
+        }
+        </script>
+        <section class="mainsection">
+            <div class="overlay">
+                <h1>AUTO CART</h1>
+                <span class="sloagn">SHOP ON THE GO</span>
+            </div>
+        </section> 
+        <div class="title1">
+            <h2>HEY THERE!</h2>
+        </div>
+        <section class="connecting">
+            <div><h3>Enter cart ID</h3></div>
+            <div>
+            <input id="ipconnect" type="text" placeholder="enter cart id">
+            </div>
+            <div>
+ 
+                    
+                <button id="clicktoload" type="button"><h2>connect</h2></button>
+
+            </div>
+        </section>
+        <section class="features">
+            <div class="sub1">
+                <h3>To Do</h3>
+                <div class="todoimg">
+                    <img src="icons8-to-do-80.png" alt="to do list">
+
+                </div>
+                <h4>Your grocery list</h4>
+                <a href="todo.html">
+                    <button class="todo"><h4>Select</h4></button>
+                </a>
+            </div>
+            <div class="sub1">
+                <h3>Total spending</h3>
+                <div class="spendingimg">
+                    <img src="icons8-cash-and-credit-card-96.png" alt="to do list">
+                </div>
+                
+                <h4>View your spending</h4>
+                <a href="spending.html">
+                    <button class="spend"><h4>Select</h4></button>
+                </a>
+            </div>
+        </section>
+        
+
+
+
+    </header>
+<script>
+
+const connectbtn=document.getElementById("clicktoload");
+const textfield=document.getElementById("ipconnect"); 
+
+
+connectbtn.addEventListener("click",function(){
+  const cartid=textfield.value.trim();
+   
+  console.log("the value you entered : ",cartid);
+  if(!cartid){
+    alert("enter cart ID");
+    return;
+  }
+  localStorage.setItem("cartID",cartid);
+  const sessionid=crypto.randomUUID();
+  localStorage.setItem("sessionid",sessionid);
+  window.location.href="cart.html";
+})
+</script>
+</body>
+</html>

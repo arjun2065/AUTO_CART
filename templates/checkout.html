@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>checkout</title>
+    <link type="image/png" sizes="16x16" rel="icon" href=".../icons8-google pay-color-16.png">
+</head>
+<body>
+    
+    <nav class="checkoutnav">
+        <div class="sideicon1">
+                <button onclick="back()"><i class="fa-solid fa-arrow-left"></i></button>
+        </div> 
+
+        <div><h1>
+            checkout cart items
+        </h1></div>
+
+    </nav>
+
+    <section class="newdiv">
+        <div class="checkoutbox">
+            <div><h3>CHECKOUT</h3></div>
+            <div>
+            <label for="paymentmethord"><h3>choose payment methord</h3></label><br>
+            <input type="radio" id="gpay" name="payf" value="gpay">
+            <label for="gpay">Google pay <img src="icons8-google-pay-16.png" alt=""></label><br>
+            <input type="radio" id="paytm" name="payf" value="paytm">
+            <label for="paytm">paytm <img src="icons8-paytm-16.png" alt=""></label><br>
+            <input type="radio" id="phonepay" name="payf" value="phonepay">
+            <label for="phonepay">phone pay <img src="icons8-phone-pe-16.png" alt=""></label><br>
+            <input type="radio" id="others" name="payf" value="others">
+            <label for="others">others <img src="icons8-payment-20.png" alt=""></label><br>
+            </div>
+            <div>
+ 
+                    
+                <button id="pay" type="submit" onclick="paynow()"><h2>Pay Now <span id="payamt"></span></h2></button>
+
+            </div>
+        </div>
+
+        </section>
+    <script>
+
+    
+    const paybtn=document.getElementById("pay")
+    paybtn.addEventListener("click",function(){
+        const upiid="some@upi";
+
+        const selected=document.querySelector('input[name:payf]:checked');
+        if(!selected){
+            alert("please select upi app");
+            return;
+        }
+        let url="";
+        switch(selected.value){
+            case "gpay":
+                url=`tez://upi/pay?pa=${upiid}&pn=autocart&am=${totalprice}&cu=INR`;
+                break;
+            case "paytm":
+                url=`paytmmp://pay?pa=${upiid}&pn=autocart&am=${totalprice}&cu=INR`;
+                break;
+            case "phonepe":
+                url=`phonepe://pay?pa=${upiid}&pn=autocart&am=${totalprice}&cu=INR`;
+                break;
+            case "others":
+                url=`upi://pay?pa=${upiid}&pn=autocart&am=${totalprice}&cu=INR&tn=thanksforpurchasig`;
+
+        }
+        window.location.href=url;
+
+
+    })
+
+    function back(){
+    window.location.href="cart.html";
+    
+
+    }
+    function paynow(){
+        window.location.href="bill.html";
+    }
+    const totalprice=localStorage.getItem("totalamount");
+    document.getElementById("payamt").textContent=`₹${totalprice}`;
+    </script>
+</body>
+</html>

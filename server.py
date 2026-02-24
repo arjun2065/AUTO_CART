@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from flask import Flask, request, jsonify,json
+from flask import Flask, request, jsonify,json,render_template
 from flask_sock import Sock
 from datetime import datetime
 import os
@@ -19,6 +19,7 @@ cart=database['cart']
 device=database['device']
 user=database['user']
 s=bcrypt.gensalt()
+render_template('index.html')
 carts={}
 clients={}
 @socket.route("/ws")

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bill</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <title>checkout</title>
+</head>
+<body>
+    <nav class="checkoutnav">
+        <div class="sideicon1">
+                <button onclick="back()"><i class="fa-solid fa-arrow-left"></i></button>
+         </div> 
+
+        <div>
+            
+        </div>
+    </nav>
+    <div class="newdiv">
+        <div>
+        <h2>PAYMENT SUCCESSFUL</h2>
+        </div>
+        <div id="usercreation">
+            <h2>QR CODE FOR CHECKOUT</h2>
+            <div id="qrcode"></div>
+            <button id="viewbill" onclick="viewbill()">View Bill</button>
+            <button id="viewbill" onclick="endsession()">End session</button>
+        </div>
+        
+        
+    </div>
+    
+</body>
+
+<script>
+const userid=localStorage.getItem("user")
+const sessionid=localStorage.getItem("sessionid")
+const cart=JSON.parse(localStorage.getItem("cartentries"))
+new QRCode(document.getElementById("qrcode"), `successfull payment userid = ${userid} sid = ${sessionid} items = ${cart}`);
+function viewbill(){
+    window.location.href="finalbill.html";
+}
+function endsession(){
+    localStorage.removeItem("cartentries")
+}
+function back(){
+        alert("you cant go back please end session");
+
+
+    }
+</script>
+
+</html>

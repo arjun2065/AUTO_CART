@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cart</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body class="cart">
+    
+    <nav class="logos">
+        <div class="sideicon1">
+                <button onclick="back()"><i class="fa-solid fa-arrow-left"></i></button>
+         </div> 
+
+        <div>
+            <h1> CART</h1>
+        </div>
+    </nav>
+    <section id="item1">
+        <div id="items">
+            <h3>status : <i class="bi bi-wifi"></i> </h3>
+        </div>
+    </section>
+    <nav class="bottomnav">
+        <div>
+            <h2>Total :</h2>
+            <span id="carttotal">₹0</span>
+        </div>
+        <div class="checkout">
+            <button id="checkoutbtn" onclick="check()"><h3>checkout</h3></button>
+        </div>
+    </nav>
+
+    <section class="cartlist">
+        
+        <div id="cart"></div>
+        
+    </section>
+    
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+    <script>
+    
+    
+      
+    function back(){
+        window.location.href="index.html";
+
+
+    }
+    function check(){
+    const totamt=localStorage.getItem("totalamount");
+    if(!totamt){
+        return
+    }
+    }
+    
+    document.addEventListener("DOMContentLoaded",() => {
+        const item=document.getElementById("item1");
+        const cartid = localStorage.getItem("cartID");
+        if(!cartid){
+            item.innerHTML=" <h3>Not connected to cart</h3>";
+            return;
+        }
+        item.insertAdjacentHTML("beforeend",`
+            <section class="items">
+                <h3> cart ID : ${cartid}</h3>
+            </section>`);
+        
+    });
+    const checkbtn=document.getElementById("checkoutbtn");
+    checkbtn.addEventListener("click", function () {
+
+    const totamt = localStorage.getItem("totalamount");
+    const userid = localStorage.getItem("userids");
+    const email = localStorage.getItem("email");
+
+    fetch("https://auto-cart.onrender.com/order", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            amount: totamt,
+            customerid: userid,
+            email: email
+        })
+    })
+    .then(res => res.json())
+    .then(async (data) => {
+        const cashfree = Cashfree({
+        mode: "sandbox"   
+    })
+    console.log(cashfree);
+        cashfree.checkout({
+            paymentSessionId: data.payment_session_id,
+            redirectTarget: "_self"
+        });
+    })
+    
+
+    .catch(err => console.error(err));
+
+});
+    
+
+    </script>
+
+   <script src="script.js"></script> 
+</body>
+</html>
