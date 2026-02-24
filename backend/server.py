@@ -108,7 +108,7 @@ def user_creation():
     }
     user.replace_one({"userid":data["userid"]},user_data,upsert=True)
     return jsonify({"message":"user updated"}),200
-@app.route("/webhook")
+@app.route("/webhook",methods=["POST"])
 def webhook():
     data=request.get_json()
     orderid=data.get("order_id")
