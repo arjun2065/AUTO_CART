@@ -121,7 +121,7 @@ def webhook():
        
         orders.update_one({"order_id": orderid},
             {"$set": {"status": "failed"}})
-    return 200
+    return "OK" ,200
 
 @app.route("/success")
 def success():
