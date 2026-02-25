@@ -26,7 +26,7 @@
     </section>
     <nav class="bottomnav">
          <div class="del">
-            <button id="checkoutbtn" onclick="deletee()"><h3>Delete an item</h3></button>
+            <button id="check" onclick="deletee()"><h3>Delete an item</h3></button>
         </div>
         <div>
             <h2>Total :</h2>
@@ -82,6 +82,24 @@
     const totamt = localStorage.getItem("totalamount");
     const userid = localStorage.getItem("userids");
     const email = localStorage.getItem("email");
+    fetch("https://auto-cart.onrender.com/order_create", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            userid: userid,
+            amount: totamt,
+            orderid: crypto.randomUUID()
+        })
+    })
+        .then(res => res.json())
+        .then(async (data) => {
+            console.log(data);
+        })
+        .catch(err => console.error(err));
+
+    
 
     fetch("https://auto-cart.onrender.com/order", {
         method: "POST",
@@ -109,7 +127,8 @@
 
     .catch(err => console.error(err));
 
-});
+})
+
     
 
     </script>

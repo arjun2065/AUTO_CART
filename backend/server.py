@@ -4,6 +4,7 @@ from flask_sock import Sock
 from datetime import datetime
 import time
 import os
+
 import requests
 from dotenv import load_dotenv
 import bcrypt
@@ -19,10 +20,11 @@ collection=database['products']
 cart=database['cart']
 device=database['device']
 user=database['user']
-orders=database['order']
+orders=database['orders']
 s=bcrypt.gensalt()
 carts={}
 clients={}
+print(os.getenv("MONGO_URL"))
 @socket.route("/ws")
 def websocket(ws):
     print("WS CONNECTED")
@@ -108,6 +110,28 @@ def user_creation():
     }
     user.replace_one({"userid":data["userid"]},user_data,upsert=True)
     return jsonify({"message":"user updated"}),200
+@app.route("/order_create",methods=["POST"])
+def order():
+    data=request.json
+    userid=data.get("userid")
+    amount=data.get("amount")
+    orderid=data.get("orderid")
+    orderdoc={
+        "userid":userid,
+        "amount":amount,
+        "orderid":orderid,
+        "status":success,
+        "at":datetime.utcnow()
+
+    }
+    orders.insert_one(orderdoc)
+    return jsonify({
+        "amount":amount,
+        "orderid":orderid
+    }), 200
+
+
+
 @app.route("/webhook",methods=["POST"])
 def webhook():
     data=request.get_json()
