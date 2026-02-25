@@ -137,12 +137,14 @@ def webhook():
     paymentst=data.get("payment_status")
     if paymentst == "success":
         
-        orders.update_one({"order_id": orderid},
-            {"$set": {"status": "success"}})
+        orders.update_one({"order_id": orderid,
+                           "status":"success"
+                           })
     else:
        
-        orders.update_one({"order_id": orderid},
-            {"$set": {"status": "failed"}})
+        orders.update_one({{"order_id": orderid,
+                           "status":"failure"
+                           }})
     return "OK" ,200
 
 @app.route("/success")
@@ -207,7 +209,7 @@ def create_order():
 
         },
     "order_meta": {
-        "return_url": "https://auto-cart.onrender.com/order_create?order_id={order_id}"
+        "return_url": "https://auto-cart.onrender.com/success?order_id={order_id}"
     }
     }
     headers={
