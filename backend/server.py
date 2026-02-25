@@ -141,7 +141,7 @@ def webhook():
                            {"$set":{"status":"success"}})
     else:
        
-        orders.insert_one({"order_id": orderid},
+        orders.update_one({"order_id": orderid},
                            {"$set":{"status":"failed"}})
     return "OK" ,200
 
