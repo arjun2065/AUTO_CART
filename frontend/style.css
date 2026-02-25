@@ -360,6 +360,8 @@ button:active {
 .newdiv{
     display: flex;
     align-items: center;
+    width: 100%;
+    max-width: 480px;
     justify-content: center;
     flex-direction: column;
     gap: 50px;
@@ -462,5 +464,12 @@ button:active {
     padding: 8px;
     box-shadow: 10px;
     background-size: cover;
+}
+.leavebtn button{
+    background-color: #f10b0b;
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 10px;
+    background-size: cover; 
 }
 

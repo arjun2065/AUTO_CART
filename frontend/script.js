@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded",()=>{
         
     )});
     cart.forEach(product=>{
-        totalprice=cart.reduce((sum,product)=>sum+(product.price-product.discount),0)
+        totalprice=cart.reduce((sum,product)=>sum+((product.price-product.discount)*product.quantity),0)
         document.getElementById("carttotal").textContent=`₹${totalprice}`})
         localStorage.setItem("totalamount",totalprice);
     })

@@ -24,6 +24,7 @@ orders=database['orders']
 s=bcrypt.gensalt()
 carts={}
 clients={}
+latest_weights = {}
 print(os.getenv("MONGO_URL"))
 @socket.route("/ws")
 def websocket(ws):
@@ -49,6 +50,21 @@ def websocket(ws):
         elif message["connection"] == "sub":
             clients[ws] = message["cartID"]
             ws.send(json.dumps({"status": "subscribed"}))
+        elif message["connection"] == "weight":
+            cartID = message["cartID"]
+            weight = message.get("weight")
+            latest_weights[cartID] = weight
+
+            
+            for client_ws, cid in list(clients.items()):
+                if cid == cartID:
+                    try:
+                        client_ws.send(json.dumps({
+                            "type": "weight_update",
+                            "weight": weight
+                        }))
+                    except:
+                        clients.pop(client_ws, None)
 
         elif message["connection"] == "senddata":
             cartID = message["cartID"]
@@ -58,6 +74,8 @@ def websocket(ws):
                 "barcode": message["barcode"],
                 "weight": message["weight"]
             }
+            
+
 
             sent = False
             for client_ws, cid in list(clients.items()):
@@ -71,6 +89,7 @@ def websocket(ws):
             ws.send(json.dumps({"sent": sent}))
 
     clients.pop(ws, None)
+    latest_weights.pop(cartID, None)
     print("WS DISCONNECTED")
 
 @app.route("/add_product",methods=["POST"])

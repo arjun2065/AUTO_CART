@@ -42,12 +42,13 @@
 const userid=localStorage.getItem("user")
 const sessionid=localStorage.getItem("sessionid")
 const cart=JSON.parse(localStorage.getItem("cartentries"))
-new QRCode(document.getElementById("qrcode"), `successfull payment userid = ${userid} sid = ${sessionid} `);
+new QRCode(document.getElementById("qrcode"), `successfull payment userid = ${userid} sid = ${sessionid} status:PAID `);
 function viewbill(){
     window.location.href="finalbill.html";
 }
 function endsession(){
-    localStorage.removeItem("cartentries")
+    localStorage.removeItem("cartentries");
+    window.location.href="index.html"
 }
 function back(){
         alert("you cant go back please end session");
