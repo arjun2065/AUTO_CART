@@ -4,7 +4,7 @@ from flask_sock import Sock
 from datetime import datetime
 import time
 import os
-
+import uuid
 import requests
 from dotenv import load_dotenv
 import bcrypt
@@ -137,14 +137,12 @@ def webhook():
     paymentst=data.get("payment_status")
     if paymentst == "success":
         
-        orders.insert_one({"order_id": orderid,
-                           "status":"success"
-                           })
+        orders.update_one({"order_id": orderid},
+                           {"$set":{"status":"success"}})
     else:
        
-        orders.insert_one({{"order_id": orderid,
-                           "status":"failure"
-                           }})
+        orders.insert_one({"order_id": orderid},
+                           {"$set":{"status":"failed"}})
     return "OK" ,200
 
 @app.route("/success")
@@ -199,7 +197,9 @@ def view_list():
 @app.route("/order",methods=["POST"])
 def create_order():
     data=request.json
+    order_id=str(uuid.uuid4())
     order_dat={
+        "order_id":order_id,
         "order_amount":data["amount"],
         "order_currency":"INR",
         "customer_details":{
@@ -223,7 +223,19 @@ def create_order():
         json=order_dat,
         headers=headers
     )
-    return response.json()
+    resp= response.json()
+    orderdoc={
+
+        "order_amount":data["amount"],
+        "userid":data["customerid"],
+        "orderid":order_id,
+        "status":success,
+        "at":datetime.utcnow()
+
+    }
+    orders.insert_one(orderdoc)
+    return resp
+
 
     
 @app.route("/view_list/<userid>",methods=["GET"])
