@@ -229,7 +229,7 @@ def create_order():
         "order_amount":data["amount"],
         "userid":data["customerid"],
         "orderid":order_id,
-        "status":success,
+        "status":"pending",
         "at":datetime.utcnow()
 
     }
