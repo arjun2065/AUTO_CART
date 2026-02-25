@@ -133,9 +133,9 @@ def order():
 @app.route("/webhook",methods=["POST"])
 def webhook():
     data=request.get_json()
-    orderid=data.get("order_id")
-    paymentst=data.get("payment_status")
-    if paymentst == "success":
+    orderid=data['data']['order']['orderid']
+    paymentst=data['data']['order']['payment_status']
+    if paymentst == "SUCCESS":
         
         orders.update_one({"order_id": orderid},
                            {"$set":{"status":"success"}})
@@ -147,7 +147,6 @@ def webhook():
 
 @app.route("/success")
 def success():
-    time.sleep(2)
     orderid=request.args.get("order_id")
     order=orders.find_one({"order_id":orderid})
     if order and order["status"] =="success":
