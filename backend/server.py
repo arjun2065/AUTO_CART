@@ -137,12 +137,12 @@ def webhook():
     paymentst=data.get("payment_status")
     if paymentst == "success":
         
-        orders.update_one({"order_id": orderid,
+        orders.insert_one({"order_id": orderid,
                            "status":"success"
                            })
     else:
        
-        orders.update_one({{"order_id": orderid,
+        orders.insert_one({{"order_id": orderid,
                            "status":"failure"
                            }})
     return "OK" ,200
