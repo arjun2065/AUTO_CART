@@ -42,7 +42,7 @@
 const userid=localStorage.getItem("user")
 const sessionid=localStorage.getItem("sessionid")
 const cart=JSON.parse(localStorage.getItem("cartentries"))
-new QRCode(document.getElementById("qrcode"), `successfull payment userid = ${userid} sid = ${sessionid} items = ${cart}`);
+new QRCode(document.getElementById("qrcode"), `successfull payment userid = ${userid} sid = ${sessionid} `);
 function viewbill(){
     window.location.href="finalbill.html";
 }

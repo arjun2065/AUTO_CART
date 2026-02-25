@@ -113,12 +113,10 @@ def user_creation():
 @app.route("/order_create",methods=["POST"])
 def order():
     data=request.json
-    userid=data.get("userid")
-    amount=data.get("amount")
+    
     orderid=data.get("orderid")
     orderdoc={
-        "userid":userid,
-        "amount":amount,
+        
         "orderid":orderid,
         "status":success,
         "at":datetime.utcnow()
@@ -126,7 +124,7 @@ def order():
     }
     orders.insert_one(orderdoc)
     return jsonify({
-        "amount":amount,
+        
         "orderid":orderid
     }), 200
 
@@ -209,7 +207,7 @@ def create_order():
 
         },
     "order_meta": {
-        "return_url": "https://auto-cart.onrender.com/success?order_id={order_id}"
+        "return_url": "https://auto-cart.onrender.com/order_create?order_id={order_id}"
     }
     }
     headers={
