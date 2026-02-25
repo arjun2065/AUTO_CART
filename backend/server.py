@@ -134,7 +134,7 @@ def order():
 def webhook():
     data=request.get_json()
     orderid=data['data']['order']['order_id']
-    paymentst=data['data']['order']['payment_status']
+    paymentst=data['data']['payment']['payment_status']
     if paymentst == "SUCCESS":
         
         orders.update_one({"order_id": orderid},
