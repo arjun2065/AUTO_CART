@@ -62,70 +62,87 @@ socket.onopen = () => {
     "connection":"sub",
     "cartID":cartid
   }))
+let weightBuffer = [];
+let avgWeight = 0;
+const tolerance = 10; 
 
 
-socket.onmessage=(event) =>{
-  const data=JSON.parse(event.data)
-  console.log(event.data)
-  if (!data.barcode) {
-   
+socket.onmessage = (event) => {
+
+  const data = JSON.parse(event.data);
+  console.log(event.data);
+
+ 
+  if (data.type === "weight_update") {
+
+    const weight = parseFloat(data.weight);
+
+    if (!isNaN(weight)) {
+
+      weightBuffer.push(weight);
+
+      if (weightBuffer.length > 5) {
+        weightBuffer.shift();
+      }
+
+      const sum = weightBuffer.reduce((a, b) => a + b, 0);
+      avgWeight = sum / weightBuffer.length;
+
+      console.log("Average Weight:", avgWeight);
+    }
+
     return;
-  
   }
+
+  
+  if (!data.barcode) {
+    return;
+  }
+
   fetch(`https://auto-cart.onrender.com/get_product/${data.barcode}`)
     .then(res => res.json())
     .then(product => {
-      
-      console.log("Data from server:", product);
-      const carte = JSON.parse(localStorage.getItem("cartentries"))||[];
-      const userid=localStorage.getItem("user")
-      
-      let cartentries=JSON.parse((localStorage.getItem("cartentries")))||[];
 
-      const exitem=cartentries.find(x=>x.barcode===product.barcode);
-        console.log(exitem)
-        
-        if(exitem){
-          exitem.quantity+=1;
-          
-          
-          
-        }
-        else{
-          cartentries.push({
-            "barcode":product.barcode,
-            "discount":product.discount,
-            "item":product.item,
-            "price":product.price,
-            "weight":product.weight,
-            "quantity":1
-          });
-        }
-        
+      console.log("Data from server:", product);
+
+      let cartentries = JSON.parse(localStorage.getItem("cartentries")) || [];
+
+      const exitem = cartentries.find(x => x.barcode === product.barcode);
+
+      if (exitem) {
+        exitem.quantity += 1;
+      } else {
+        cartentries.push({
+          "barcode": product.barcode,
+          "discount": product.discount,
+          "item": product.item,
+          "price": product.price,
+          "weight": product.weight,
+          "quantity": 1
+        });
+      }
+
       
+      let expectedTotal = cartentries.reduce(
+        (sum, product) => sum + (product.weight * product.quantity),
+        0
+      );
+
+      console.log("Expected Total:", expectedTotal);
+      console.log("Measured Avg:", avgWeight);
+
       
-      
-      localStorage.setItem("cartentries",JSON.stringify(cartentries))
+      if (Math.abs(avgWeight - expectedTotal) > tolerance) {
+        alert("Weight mismatch detected!");
+        localStorage.setItem("mismatch",avgWeight);
+      }
+      localStorage.removeItem("mismatch");
+
+      localStorage.setItem("cartentries", JSON.stringify(cartentries));
       totalprice=cartentries.reduce((sum,product)=>sum+((product.price-product.discount)*product.quantity),0)
       document.getElementById("carttotal").textContent=`₹${totalprice}`;
       localStorage.setItem("totalamount",totalprice);
-      fetch(`https://auto-cart.onrender.com/add_cart`,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                "sessionid":localStorage.getItem("sessionid"),
-                "userid":userid,
-                "barcode":product.barcode
-            })
-            
-            })
-            .then(res => res.json())
-            .then(data =>{
-              console.log(data)
-            })
-
+      
       
       const cart = document.getElementById("cart");
       const carten = JSON.parse(localStorage.getItem("cartentries"))||[];
