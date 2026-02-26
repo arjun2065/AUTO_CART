@@ -64,7 +64,7 @@ socket.onopen = () => {
   }))
 let weightBuffer = [];
 let avgWeight = 0;
-const tolerance = 10; 
+const tolerance = 30; 
 
 
 socket.onmessage = (event) => {
